@@ -47,8 +47,14 @@ with open('generalledger_raw.csv', 'rb') as f:
         for splitTrans in transaction:
             if splitTrans[-2]:
                 #remove comma and dollar sign
+                #debit
                 amount = re.sub("[^\d\.]", "", splitTrans[-2])
             if splitTrans[-1]:
+                #credit
                 amount = "-" + re.sub("[^\d\.]", "", splitTrans[-1])
-            trns["spl"].append({"amount": amount, "accnt": splitTrans[3]})
+            if splitTrans[-4]:
+                splitMemo = splitTrans[-4]
+            else:
+                splitMemo = ""
+            trns["spl"].append({"amount": amount, "accnt": splitTrans[3], "memo": splitMemo})
         print trns
