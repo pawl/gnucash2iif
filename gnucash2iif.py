@@ -39,5 +39,16 @@ with open('generalledger_raw.csv', 'rb') as f:
         #row is not beginning of record, add to splits
         else:
             splits.append(row)
-    
-    print transactionList[0]
+
+    #get information from transactions and add to dictionary
+    for transaction in transactionList:
+        transactionHeader = transaction.pop(0)
+        trns = {"date": transactionHeader[0], "docnum": transactionHeader[1], "memo": transactionHeader[2], "trnstype": "GENERAL JOURNAL", "spl": []}
+        for splitTrans in transaction:
+            if splitTrans[-2]:
+                #remove comma and dollar sign
+                amount = re.sub("[^\d\.]", "", splitTrans[-2])
+            if splitTrans[-1]:
+                amount = "-" + re.sub("[^\d\.]", "", splitTrans[-1])
+            trns["spl"].append({"amount": amount, "accnt": splitTrans[3]})
+        print trns
