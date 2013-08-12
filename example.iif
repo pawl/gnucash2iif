@@ -1,0 +1,20 @@
+!TRNS  TRNSID	TRNSTYPE	DATE	ACCNT	CLASS	AMOUNT	DOCNUM	MEMO
+!SPL	SPLID	TRNSTYPE	DATE	ACCNT	CLASS	AMOUNT	DOCNUM	MEMO
+!ENDTRNS								
+!TRNS	TRNSID	TRNSTYPE	DATE	ACCNT	CLASS	AMOUNT	DOCNUM	MEMO
+!SPL	SPLID	TRNSTYPE	DATE	ACCNT	CLASS	AMOUNT	DOCNUM	MEMO
+!ENDTRNS								
+TRNS		GENERAL JOURNAL	02/02/2010	Fees		0.85	0SM075W-FEE	Fee for Donation Received from Jose Rodriguez
+SPL		GENERAL JOURNAL	02/02/2010	Cash in Paypal		-0.85		Fee for Donation Received from Jose Rodriguez
+ENDTRNS								
+TRNS		GENERAL JOURNAL	02/03/2010	Cash in Paypal		50	39M1911B	Donation Received from Steve McNamara
+SPL		GENERAL JOURNAL	02/03/2010	Donations		-50		Donation Received from Steve McNamara
+ENDTRNS								
+TRNS		GENERAL JOURNAL	9/30/2011	Utilities		40.68		Gas Bill
+SPL		GENERAL JOURNAL	9/30/2011	General Fund		-40.68		Gas Bill
+ENDTRNS								
+TRNS		GENERAL JOURNAL	10/03/2011	Tim Wong		664.91	1006	"Reim Tim for Snacks, & Office supplies"
+SPL		GENERAL JOURNAL	10/03/2011	Snacks Fund		-508.82		"Reim Tim for Snacks, & Office supplies"
+SPL		GENERAL JOURNAL	10/03/2011	Build-out Fund		-77.73		"Reim Tim for Snacks, & Office supplies"
+SPL		GENERAL JOURNAL	10/03/2011	Operations and Facilities Fund		-78.36		"Reim Tim for Snacks, & Office supplies"
+ENDTRNS
