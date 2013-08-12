@@ -10,3 +10,8 @@ Instructions:
 3. Open the HTML with Excel 2010
 4. Save as CSV
 5. Run the script and select the .csv file you created
+
+Resources: 
+
+* http://support.quickbooks.intuit.com/support/articles/HOW12778 - Overview of how IIF files work.
+* http://support.quickbooks.intuit.com/support/pages/executable/iif/iif_import_kit.zip - Contains IIF Header Help folder which contains all possible headers.
