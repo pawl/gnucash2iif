@@ -12,6 +12,7 @@ def CheckDate(dateString):
 with open('generalledger.csv', 'rb') as f:
     reader = csv.reader(f)
     for row in reader:
+        #check if row is the beginning of a record
         if CheckDate(row[0]):
             print "this is a date"
         else:
