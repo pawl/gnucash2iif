@@ -13,4 +13,5 @@ Instructions:
 
 Resources: 
 
-* http://support.quickbooks.intuit.com/support/articles/HOW12778
+* http://support.quickbooks.intuit.com/support/articles/HOW12778 - Overview of how IIF files work.
+* http://support.quickbooks.intuit.com/support/pages/executable/iif/iif_import_kit.zip - Contains IIF Header Help folder which contains all possible headers.
