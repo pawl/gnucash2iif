@@ -41,9 +41,10 @@ with open('generalledger_raw.csv', 'rb') as f:
             splits.append(row)
 
     #get information from transactions and add to dictionary
+    transactions = []
     for transaction in transactionList:
         transactionHeader = transaction.pop(0)
-        trns = {"date": transactionHeader[0], "docnum": transactionHeader[1], "memo": transactionHeader[2], "trnstype": "GENERAL JOURNAL", "spl": []}
+        trns = {"date": transactionHeader[0], "docnum": transactionHeader[1], "memo": transactionHeader[2], "spl": []}
         for splitTrans in transaction:
             if splitTrans[-2]:
                 #remove comma and dollar sign
@@ -52,9 +53,29 @@ with open('generalledger_raw.csv', 'rb') as f:
             if splitTrans[-1]:
                 #credit
                 amount = "-" + re.sub("[^\d\.]", "", splitTrans[-1])
+            amount = amount.strip(' \t\n\r') # trim whitespace
             if splitTrans[-4]:
                 splitMemo = splitTrans[-4]
             else:
                 splitMemo = ""
-            trns["spl"].append({"amount": amount, "accnt": splitTrans[3], "memo": splitMemo})
-        print trns
+            trns["spl"].append({"amount": amount, "accnt": splitTrans[3],"date": trns["date"], "memo": splitMemo})
+        transactions.append(trns)
+
+header = "!TRNS	TRNSID	TRNSTYPE	DATE	ACCNT	CLASS	AMOUNT	DOCNUM	MEMO\n"\
+        + "!SPL	SPLID	TRNSTYPE	DATE	ACCNT	CLASS	AMOUNT	DOCNUM	MEMO\n"\
+        + "!ENDTRNS"
+
+iif_file = open("output.iif", "w")
+iif_file.write(header + '\n')
+for item in transactions:
+    templateTRNS = "TRNS		GENERAL JOURNAL	%(DATE)s	%(ACCNT)s		%(AMOUNT)s	%(DOCNUM)s	%(MEMO)s" % {'DATE': item["date"], 'ACCNT': item["spl"][0]["accnt"], 'AMOUNT': item["spl"][0]["amount"], 'DOCNUM': item["docnum"], 'MEMO': item["memo"]}
+    iif_file.write(templateTRNS + '\n')
+    splCount = 0
+    for spl in item["spl"]:
+        if splCount > 0:
+            templateSPL = "SPL		GENERAL JOURNAL	%(DATE)s	%(ACCNT)s		%(AMOUNT)s		%(MEMO)s" % {'DATE': spl["date"], 'ACCNT': spl["accnt"], 'AMOUNT': spl["amount"], 'MEMO': spl["memo"]}
+            iif_file.write(templateSPL + '\n')
+        splCount = splCount + 1
+    templateEND = "ENDTRNS"
+    iif_file.write(templateEND + '\n')
+iif_file.close()
