@@ -11,6 +11,9 @@ def CheckDate(dateString):
 
 with open('generalledger_raw.csv', 'rb') as f:
     reader = csv.reader(f)
+    for x in range(0, 3):
+        reader.next() #skip header lines
+    
     transactionList = [] #contains list of transactions
     splits = [] #contains components of each transaction
     
