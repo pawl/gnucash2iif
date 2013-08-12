@@ -63,19 +63,19 @@ with open('generalledger_raw.csv', 'rb') as f:
 
 header = "!TRNS	TRNSID	TRNSTYPE	DATE	ACCNT	CLASS	AMOUNT	DOCNUM	MEMO\n"\
         + "!SPL	SPLID	TRNSTYPE	DATE	ACCNT	CLASS	AMOUNT	DOCNUM	MEMO\n"\
-        + "!ENDTRNS"
+        + "!ENDTRNS\n"
 
 iif_file = open("output.iif", "w")
-iif_file.write(header + '\n')
+iif_file.write(header)
 for item in transactions:
-    templateTRNS = "TRNS		GENERAL JOURNAL	%(DATE)s	%(ACCNT)s		%(AMOUNT)s	%(DOCNUM)s	%(MEMO)s" % {'DATE': item["date"], 'ACCNT': item["spl"][0]["accnt"], 'AMOUNT': item["spl"][0]["amount"], 'DOCNUM': item["docnum"], 'MEMO': item["memo"]}
-    iif_file.write(templateTRNS + '\n')
+    templateTRNS = "TRNS		GENERAL JOURNAL	%(DATE)s	%(ACCNT)s		%(AMOUNT)s	%(DOCNUM)s	%(MEMO)s\n" % {'DATE': item["date"], 'ACCNT': item["spl"][0]["accnt"], 'AMOUNT': item["spl"][0]["amount"], 'DOCNUM': item["docnum"], 'MEMO': item["memo"]}
+    iif_file.write(templateTRNS)
     splCount = 0
     for spl in item["spl"]:
         if splCount > 0:
-            templateSPL = "SPL		GENERAL JOURNAL	%(DATE)s	%(ACCNT)s		%(AMOUNT)s		%(MEMO)s" % {'DATE': spl["date"], 'ACCNT': spl["accnt"], 'AMOUNT': spl["amount"], 'MEMO': spl["memo"]}
-            iif_file.write(templateSPL + '\n')
+            templateSPL = "SPL		GENERAL JOURNAL	%(DATE)s	%(ACCNT)s		%(AMOUNT)s		%(MEMO)s\n" % {'DATE': spl["date"], 'ACCNT': spl["accnt"], 'AMOUNT': spl["amount"], 'MEMO': spl["memo"]}
+            iif_file.write(templateSPL)
         splCount = splCount + 1
-    templateEND = "ENDTRNS"
-    iif_file.write(templateEND + '\n')
+    templateEND = "ENDTRNS\n"
+    iif_file.write(templateEND)
 iif_file.close()
