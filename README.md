@@ -10,3 +10,7 @@ Instructions:
 3. Open the HTML with Excel 2010
 4. Save as CSV
 5. Run the script and select the .csv file you created
+
+Resources: 
+
+* http://support.quickbooks.intuit.com/support/articles/HOW12778
