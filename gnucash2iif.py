@@ -45,21 +45,30 @@ with open('generalledger_raw.csv', 'rb') as f:
     for transaction in transactionList:
         transactionHeader = transaction.pop(0)
         trns = {"date": transactionHeader[0], "docnum": transactionHeader[1], "memo": transactionHeader[2], "spl": []}
+        splitCount = 0
         for splitTrans in transaction:
+            splitCount += 1
             if splitTrans[-2]:
                 #remove comma and dollar sign
                 #debit
                 amount = re.sub("[^\d\.]", "", splitTrans[-2])
-            if splitTrans[-1]:
+            elif splitTrans[-1]:
                 #credit
                 amount = "-" + re.sub("[^\d\.]", "", splitTrans[-1])
+            #quickbooks requires an amount on each line (can't be blank)
+            else:
+                amount = "0"
             amount = amount.strip(' \t\n\r') # trim whitespace
             if splitTrans[-4]:
                 splitMemo = splitTrans[-4]
             else:
                 splitMemo = ""
             trns["spl"].append({"amount": amount, "accnt": splitTrans[3],"date": trns["date"], "memo": splitMemo})
-        transactions.append(trns)
+        if splitCount > 1:
+            transactions.append(trns)
+        else:
+            print "transaction only had one split:"
+            print transaction
 
 header = "!TRNS	TRNSID	TRNSTYPE	DATE	ACCNT	CLASS	AMOUNT	DOCNUM	MEMO\n"\
         + "!SPL	SPLID	TRNSTYPE	DATE	ACCNT	CLASS	AMOUNT	DOCNUM	MEMO\n"\
