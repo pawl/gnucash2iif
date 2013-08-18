@@ -1,3 +1,5 @@
+#created by paul brown
+
 import csv
 import re
 import Tkinter,tkFileDialog
@@ -71,6 +73,7 @@ if filename != '' or None:
                 else:
                     splitMemo = ""
                 trns["spl"].append({"amount": amount, "accnt": splitTrans[3],"date": trns["date"], "memo": splitMemo})
+                print trns["spl"]
             if splitCount > 1:
                 transactions.append(trns)
             else:
